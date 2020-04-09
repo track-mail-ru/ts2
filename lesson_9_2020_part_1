@@ -8,7 +8,7 @@
 `*` У кого не срабатывает `tsc`:
 
 - npx tsc myScript.ts
-- ln -s /usr/local/bin/tsc 
+- ln -s /usr/local/lib/node_modules/node/bin/tsc /usr/local/bin/tsc
 
 
 ### Основные типы данных
@@ -31,8 +31,9 @@
 - oop
 - params dispatching
 
-`hello_world/helloWorld.ts`
-`interfaces/allTypes.ts`
+- `hello_world/helloWorld.ts`
+- `interfaces/allTypes.ts`
+
 
 
 ### Возможности ts. Новое
@@ -46,21 +47,28 @@
 - `modules/first.ts`
 - `modules/second.ts`
 - `modules/third.ts`
-- `modeles/types.ts`
+- `modules/types.ts`
+
 
 #### Export
 
 export default () => ...
+
 export {}
+
 export {... as ...}
+
 export {... as ...} from ...
+
 export * as ... from ...
 
 
 #### Import
 
 import ... from ...
+
 import * as ... from ...
+
 import {...} from ...
 
 
@@ -69,10 +77,14 @@ import {...} from ...
 ##### .d.ts
 
 
-Порядок импорта при использовании `import ... from '^^^'`
+Порядок импорта при использовании
+
+`import ... from '^^^'`
 
 1. .ts
 1. .tsx
+
+
 1. .d.ts – ambient module declaration
 
 
@@ -103,7 +115,7 @@ declare module "CumbersomeBackend";
 
 #### Namespaces
 
-~~Упорядочивание~~ ~~запутывание~~ ~~упорядочивание~~ пространства имен объектов
+~~Упорядочивание~~ ~~запутывание~~ упорядочивание пространства имен объектов
 
 - `namespaces/validators.ts`
 - `namespaces/mergeQuirqs.ts`
@@ -132,6 +144,7 @@ const square = new polygons.Square()
 
 
 `let t = new shapes.Shapes.Triangle();` - плохо
+
 `let t = new shapes.Triangle();` - хорошо
 
 
@@ -154,23 +167,25 @@ interface Car {
 interface Car {
     horsePower: number;
     torque: number;
+    stickers: string[];
 }
 
 const realCar = new Car {
     manufacturer: 'VAZ',
     name: 'Granta',
-    vehicleInfo: 'Realnii avtomobil dlya realnoi jizno',
+    vehicleInfo: 'Realnii avtomobil dlya realnoi jizni',
     horsePower: 98,
     torque: 145,
+    stickers: ['my life - my rules', 'dolbit normalno'],
 }
 ```
 
 
-Нефункциональные свойства
+##### Нефункциональные свойства
 
 - атрибуты интерфейсов должны быть уникальными или одного типа
 
-Функциональные свойства
+##### Функциональные свойства
 
 - каждое новое свойство считается перегрузкой 
 - последний интерфейс имеет превосходство над предыдущими
@@ -234,7 +249,7 @@ interface Document {
 ```js
 namespace Prison {
     export class Inspector { }
-    export class Prizoner { }
+    export class Prisoner { }
 }
 
 namespace Prison {
@@ -519,3 +534,21 @@ setTimeout(() => smartObj.interact(), 1000);
 ```
 
 `oop/mixins.ts`
+
+
+### TSX
+
+`tsx/button.tsx`
+
+
+#### Типы для html
+
+https://github.com/microsoft/TypeScript/blob/master/src/lib/dom.generated.d.ts
+
+
+#### Еще типы
+
+https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/
+
+
+
