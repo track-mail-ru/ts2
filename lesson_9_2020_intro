@@ -1,0 +1,23 @@
+### TypeScript #2
+
+Алексей Опалев, Мартин Комитски
+
+<img class="plain" src="images/track.svg" width=200px height=200px />
+
+
+![Important](images/important.jpg)
+
+
+
+### План лекции
+
+1. Повторение TypeScript #1 
+  - быстрый старты
+  - ключевые типы данных
+  - types & interfaces
+1. Еще типы данных 
+1. Возможности TypeScript
+  - Utility Types
+  - Decorators
+  - Mixins
+1. React TSX

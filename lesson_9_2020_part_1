@@ -1,0 +1,521 @@
+### Пройденное
+
+- Как начать разработку на ts
+- Основные типы данных
+- Возможности ts
+
+
+`*` У кого не срабатывает `tsc`:
+
+- npx tsc myScript.ts
+- ln -s /usr/local/bin/tsc 
+
+
+### Основные типы данных
+
+
+- any
+- string
+- number
+- object
+- array
+- undefined
+- null
+- void
+
+
+### Возможности ts. Повторение
+
+
+- typing
+- oop
+- params dispatching
+
+`hello_world/helloWorld.ts`
+`interfaces/allTypes.ts`
+
+
+### Возможности ts. Новое
+
+
+#### Модули
+
+- export
+- import
+
+- `modules/first.ts`
+- `modules/second.ts`
+- `modules/third.ts`
+- `modeles/types.ts`
+
+#### Export
+
+export default () => ...
+export {}
+export {... as ...}
+export {... as ...} from ...
+export * as ... from ...
+
+
+#### Import
+
+import ... from ...
+import * as ... from ...
+import {...} from ...
+
+
+#### Внешние модули. Ambient
+
+##### .d.ts
+
+
+Порядок импорта при использовании `import ... from '^^^'`
+
+1. .ts
+1. .tsx
+1. .d.ts – ambient module declaration
+
+
+```js
+declare module "Backend" {
+    export interface ITeacher {
+        name: string;
+        level: number;
+        exp?: number;
+    }
+
+	export interface ILesson {
+        title: string;
+        day: number; 
+        hours: number;
+        teacher: ITeacher;
+    }
+
+    export function makeLesson(title: string, day: number, hours: number, teacher: ITeacher): ILesson;
+}
+```
+
+
+```js
+declare module "CumbersomeBackend";
+```
+
+
+#### Namespaces
+
+~~Упорядочивание~~ ~~запутывание~~ ~~упорядочивание~~ пространства имен объектов
+
+- `namespaces/validators.ts`
+- `namespaces/mergeQuirqs.ts`
+
+
+```js
+namespace Shapes {
+    export namespace Polygons {
+        export class Triangle { }
+        export class Square { }
+    }
+}
+```
+
+
+```js
+const square = new Shapes.Polygons.Square()
+```
+
+
+```js
+import polygons = Shapes.Polygons;
+
+const square = new polygons.Square()
+```
+
+
+`let t = new shapes.Shapes.Triangle();` - плохо
+`let t = new shapes.Triangle();` - хорошо
+
+
+- Модули и пространства имен нужны для упорядочивания кода
+- Использовать и модули, и пространства имен одновременно – избыточно
+- Проще всего работать с модулями
+
+
+
+### Declaration merging
+
+
+```js
+interface Car {
+    manufacturer: string;
+    name: string;
+    vehicleInfo: string;
+}
+
+interface Car {
+    horsePower: number;
+    torque: number;
+}
+
+const realCar = new Car {
+    manufacturer: 'VAZ',
+    name: 'Granta',
+    vehicleInfo: 'Realnii avtomobil dlya realnoi jizno',
+    horsePower: 98,
+    torque: 145,
+}
+```
+
+
+Нефункциональные свойства
+
+- атрибуты интерфейсов должны быть уникальными или одного типа
+
+Функциональные свойства
+
+- каждое новое свойство считается перегрузкой 
+- последний интерфейс имеет превосходство над предыдущими
+- специализированное свойство будет иметь превосходство над обычными
+
+
+```js
+interface Cloner {
+    clone(animal: Animal): Animal;
+}
+
+interface Cloner {
+    clone(animal: Sheep): Sheep;
+}
+
+interface Cloner {
+    clone(animal: Dog): Dog;
+    clone(animal: Cat): Cat;
+}
+```
+
+
+```js
+interface Cloner {
+    clone(animal: Dog): Dog;
+    clone(animal: Cat): Cat;
+    clone(animal: Sheep): Sheep;
+    clone(animal: Animal): Animal;
+}
+```
+
+
+```js
+interface Document {
+    createElement(tagName: any): Element;  // any
+}
+interface Document {
+    createElement(tagName: "div"): HTMLDivElement;  // specialized
+    createElement(tagName: "span"): HTMLSpanElement;  // specialized
+}
+interface Document {
+    createElement(tagName: string): HTMLElement;  // general
+    createElement(tagName: "canvas"): HTMLCanvasElement;  // specialized
+}
+```
+
+
+```js
+interface Document {
+    createElement(tagName: "canvas"): HTMLCanvasElement;
+    createElement(tagName: "div"): HTMLDivElement;
+    createElement(tagName: "span"): HTMLSpanElement;
+    createElement(tagName: string): HTMLElement;
+    createElement(tagName: any): Element;
+}
+```
+
+
+#### Объединение пространства имен
+
+```js
+namespace Prison {
+    export class Inspector { }
+    export class Prizoner { }
+}
+
+namespace Prison {
+    export interface Aparts { facilities: string[]; }
+    export class Yard { facilities: string[] }
+}
+```
+
+
+```js
+namespace Prison {
+    export class Inspector { }
+    export class Prizoner { }
+
+    export interface Aparts { facilities: string[]; }
+    export class Yard { facilities: string[] }
+```
+
+
+Доступны в общем пространстве имен будут только экспортированные объекты.
+
+`namespaces/mergeQuirqs.ts`
+
+
+
+### Utility types \u1F4AA
+
+
+##### Partial
+
+Все свойства необязательные
+
+##### ReadOnly
+
+Все свойства – readonly
+
+##### Required
+
+Все свойства обязательны
+
+##### NonNullable
+
+Все свойства, кроме null, undefined
+
+
+`utilityTypes/commonProps.ts`
+
+
+##### Pick
+
+Использовать выбранные свойства
+
+##### Omit
+
+Использовать все свойства, кроме выбранных
+
+
+utilityTypes/pickNOmit.ts
+
+
+##### Record
+
+Присваивание свойств одного типа к другому типу.
+
+```js
+interface PageInfo {
+    title: string;
+}
+
+type Page = 'home' | 'about' | 'contact';
+
+const x: Record<Page, PageInfo> = {
+    about: { title: 'about' },
+    contact: { title: 'contact' },
+    home: { title: 'home' },
+};
+```
+
+
+##### Exclude
+
+Взять только те свойства, которых нет во втором объекте
+
+```js
+type T0 = Exclude<"a" | "b" | "c", "a">;  // "b" | "c"
+type T1 = Exclude<"a" | "b" | "c", "a" | "b">;  // "c"
+type T2 = Exclude<string | number | (() => void), Function>;  // string | number
+```
+
+##### Extract
+
+Взять только те свойства, которые есть во втором объекте
+
+```js
+type T0 = Extract<"a" | "b" | "c", "a" | "f">;  // "a"
+type T1 = Extract<string | number | (() => void), Function>;  // () => void
+```
+
+
+##### Parameters
+
+##### ConstructorParameters
+
+##### ReturnType
+
+##### InstanceType
+
+##### ThisParameterType
+
+
+
+### Decorators
+
+
+OOP Design pattern
+
+Расширение функционала вызываемого объекта без его модификации
+
+*O* from solid
+
+`/oop/commonDecorators.ts`
+
+```js
+const noisy = (func) => {
+        const wrapper = (...args) => {
+            console.log('ppphhhhffffchfiu')
+            const res = func(...args)
+            console.log('khhhhheeeeeefffph')
+            return res
+        }
+    return wrapper
+}
+
+
+const sum = (a, b) => (a + b)
+const noisySum = noisy(sum)
+
+noisySum(1, 15)
+```
+
+#### Decorators TS
+
+> A Decorator is a special kind of declaration that can be attached to a class declaration, method, accessor, property, or parameter.
+
+
+`tsc --target ES5 --experimentalDecorators`
+
+`"experimentalDecorators": true`
+
+`oop/typescriptDecorators.ts`
+
+
+```js
+// first
+@first @second myFunction
+
+// second
+@first
+@second
+myFunction
+```
+
+
+#### Сигнатура декоратора
+
+1. target - метод, к которому применяется декоратр
+1. key - имя метода
+1. value - дескриптор свойства
+
+
+Дескриптор свойства 
+
+Object.getOwnPropertyDescriptor
+
+`oop/typescriptDecorators.ts`
+
+#### Создание декоратора
+
+Decorator factories
+
+```js
+function enumerable(value: boolean) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        descriptor.enumerable = value;
+    };
+}
+```
+
+
+```js
+class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+
+    @enumerable(false)
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+```
+
+
+##### reflect-metadata
+
+https://github.com/rbuckton/reflect-metadata
+
+```js
+// apply metadata via a decorator to a constructor
+@Reflect.metadata(metadataKey, metadataValue)
+class C {
+  // apply metadata via a decorator to a method (property)
+  @Reflect.metadata(metadataKey, metadataValue)
+  method() {
+  }
+}
+```
+
+
+
+### Mixins
+
+Примеси для классов
+
+
+```js
+function applyMixins(derivedCtor: any, baseCtors: any[]) {
+    baseCtors.forEach(baseCtor => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+            Object.defineProperty(derivedCtor.prototype, name, Object.getOwnPropertyDescriptor(baseCtor.prototype, name));
+        });
+    });
+}
+```
+
+
+```js
+// Activatable Mixin
+class Activatable {
+    isActive: boolean;
+    activate() {
+        this.isActive = true;
+    }
+    deactivate() {
+        this.isActive = false;
+    }
+}
+```
+
+
+```js
+// Disposable Mixin
+class Disposable {
+    isDisposed: boolean;
+    dispose() {
+        this.isDisposed = true;
+    }
+}
+```
+
+
+```js
+class SmartObject {
+    constructor() {
+        setInterval(() => console.log(this.isActive + " : " + this.isDisposed), 500);
+    }
+
+    interact() {
+        this.activate();
+    }
+}
+```
+
+
+```js
+interface SmartObject extends Disposable, Activatable {}
+applyMixins(SmartObject, [Disposable, Activatable]);
+
+const smartObj = new SmartObject();
+setTimeout(() => smartObj.interact(), 1000);
+```
+
+`oop/mixins.ts`
