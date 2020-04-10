@@ -46,10 +46,12 @@ var MixableObj = /** @class */ (function () {
         setInterval(function () { return console.log(_this.isActive + " : " + _this.isDisposed); }, 500);
     }
     MixableObj.prototype.interact = function () {
+        this.dispose();
         this.activate();
     };
     return MixableObj;
 }());
 applyMixins(MixableObj, [Disposable, Activatable]);
 var obj = new MixableObj();
+obj.interact();
 setTimeout(function () { return obj.interact(); }, 1000);

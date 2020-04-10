@@ -8,4 +8,3 @@ namespace buildLabel {
 }
 
 console.log(buildLabel("Sam Smith"));
-

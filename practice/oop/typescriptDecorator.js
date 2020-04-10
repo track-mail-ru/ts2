@@ -30,7 +30,9 @@ function log(target, key, value) {
                 args[_i] = arguments[_i];
             }
             var a = args.map(function (a) { return JSON.stringify(a); }).join();
+            console.log('ppphhhhkkkkkhheee');
             var result = value.value.apply(this, args);
+            console.log('ppphhhhkkkkkhheee');
             var r = JSON.stringify(result);
             console.log("Call: " + key + "(" + a + ") => " + r);
             return result;
@@ -49,7 +51,7 @@ var C = /** @class */ (function () {
     return C;
 }());
 var c = new C();
-c.foo(2);
+// c.foo(2)
 // descriptor
 console.log(Object.getOwnPropertyDescriptor(C.prototype, 'foo'));
 // value: ƒ foo(a)

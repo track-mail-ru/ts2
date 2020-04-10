@@ -22,3 +22,6 @@ exports.Person = Martin;
 var martin = new Martin('martin', 'active');
 console.log(martin.isTop());
 martin.sayCool();
+ts
+    .tsx
+    .d.ts;

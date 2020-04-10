@@ -21,7 +21,7 @@ namespace Omit {
         description: string;
         completed: boolean;
     }
-    
+
     type TodoPreview = Omit<Todo, 'description'>;
     
     const todo: TodoPreview = {

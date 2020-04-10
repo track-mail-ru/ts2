@@ -4,7 +4,7 @@ const alena = new Person('alena', 'super active');
 
 console.log(alena.isTop());
 
-alena.sayCool = ():void => {console.log('Backend power!')};
+alena.sayCool = (): void => {console.log('Backend power!')};
 
 alena.sayCool();
 

@@ -6,7 +6,9 @@ function log(target: Function, key: string, value: any) {
     return {
         value: function (...args: any[]) {
             const a = args.map(a => JSON.stringify(a)).join();
+            console.log('ppphhhhkkkkkhheee')
             const result = value.value.apply(this, args);
+            console.log('ppphhhhkkkkkhheee')
             const r = JSON.stringify(result);
             console.log(`Call: ${key}(${a}) => ${r}`);
             return result;
@@ -22,7 +24,7 @@ class C {
 }
 
 const c = new C()
-c.foo(2)
+// c.foo(2)
 
 
 

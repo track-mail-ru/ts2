@@ -1,7 +1,9 @@
 // import
 // export
 
-export default () => console.log('well done!')
+export default () => console.log('well done!');
+const muFunc = () => console.log('well done!');
+export { muFunc };
 
 // interfaces
 
@@ -10,5 +12,3 @@ export interface IMartin {
     status: string;
     isTop(): boolean;
 }
-
-

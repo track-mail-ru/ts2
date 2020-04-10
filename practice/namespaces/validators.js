@@ -18,23 +18,32 @@ var ZipCodeValidator = /** @class */ (function () {
     return ZipCodeValidator;
 }());
 //// with namespaces
-// namespace Validation {
-//     export interface StringValidator {
-//         isAcceptable(s: string): boolean;
-//     }
-//     const lettersRegexp = /^[A-Za-z]+$/;
-//     const numberRegexp = /^[0-9]+$/;
-//     export class LettersOnlyValidator implements StringValidator {
-//         isAcceptable(s: string) {
-//             return lettersRegexp.test(s);
-//         }
-//     }
-//     export class ZipCodeValidator implements StringValidator {
-//         isAcceptable(s: string) {
-//             return s.length === 5 && numberRegexp.test(s);
-//         }
-//     }
-// }
+var Validation;
+(function (Validation) {
+    var lettersRegexp = /^[A-Za-z]+$/;
+    var numberRegexp = /^[0-9]+$/;
+    var LettersOnlyValidator = /** @class */ (function () {
+        function LettersOnlyValidator() {
+        }
+        LettersOnlyValidator.prototype.isAcceptable = function (s) {
+            return lettersRegexp.test(s);
+        };
+        return LettersOnlyValidator;
+    }());
+    Validation.LettersOnlyValidator = LettersOnlyValidator;
+    var ZipCodeValidator = /** @class */ (function () {
+        function ZipCodeValidator() {
+        }
+        ZipCodeValidator.prototype.isAcceptable = function (s) {
+            return s.length === 5 && numberRegexp.test(s);
+        };
+        return ZipCodeValidator;
+    }());
+    Validation.ZipCodeValidator = ZipCodeValidator;
+})(Validation || (Validation = {}));
+var zcv = new Validation.ZipCodeValidator();
+console.log('ZIP CODE VALIDATOR W NAMESPACE: ------');
+console.log(zcv.isAcceptable('123432'));
 var strings = ["Hello", "98052", "101"];
 // Validators to use
 var validators = {};

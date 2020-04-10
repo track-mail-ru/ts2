@@ -1,27 +1,27 @@
 // Partial
-namespace Parial {
-    interface Todo {
-        title: string;
-        description: string;
-    }
+// namespace Parial {
+//     interface Todo {
+//         title: string;
+//         description: string;
+//     }
 
-    function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
-        return { ...todo, ...fieldsToUpdate };
-    }
+//     function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
+//         return { ...todo, ...fieldsToUpdate };
+//     }
+//     type TPartial = Partial<Todo>;
+//     const todo1 = {
+//         title: 'organize desk',
+//         description: 'clear clutter',
+//     };
 
-    const todo1 = {
-        title: 'organize desk',
-        description: 'clear clutter',
-    };
+//     const todo2 = updateTodo(todo1, {
+//         description: 'throw out trash',
+//     });
 
-    const todo2 = updateTodo(todo1, {
-        description: 'throw out trash',
-    });
+//     console.log(`Partial: ${todo2.title} ${todo2.description}`)
+// }
 
-    console.log(`Partial: ${todo2.title} ${todo2.description}`)
-}
-
-// Readonly
+// // Readonly
 
 namespace ReadOnly {
     interface Todo {

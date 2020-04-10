@@ -9,7 +9,7 @@ interface ICustomResponse {
 const stubResponse: ICustomResponse = {
     apiVersion: 'v3',
     who: 'are',
-    you: '?',
+    you: [1, 23, 'stt'],
 }
 
 console.log(stubResponse)
@@ -28,3 +28,26 @@ makeBig = (text, times=1) => (
 )
 
 console.log(makeBig('martin', 7))
+
+interface Car {
+    manufacturer: string;
+    name: string;
+    vehicleInfo: string;
+}
+
+interface Car {
+    horsePower: number;
+    torque: number;
+    stickers: string[];
+}
+
+const realCar: Car = {
+    manufacturer: 'VAZ',
+    name: 'Granta',
+    vehicleInfo: 'Realnii avtomobil dlya realnoi jizni',
+    horsePower: 98,
+    torque: 145,
+    stickers: ['my life - my rules', 'dolbit normalno'],
+}
+
+console.log(realCar);

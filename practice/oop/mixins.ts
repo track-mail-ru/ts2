@@ -22,7 +22,6 @@ class Disposable {
     dispose() {
         this.isDisposed = true;
     }
-
 }
 
 console.log('-----------------')
@@ -50,6 +49,7 @@ class MixableObj {
     }
 
     interact() {
+        this.dispose();
         this.activate();
     }
 }
@@ -58,4 +58,5 @@ interface MixableObj extends Disposable, Activatable {}
 applyMixins(MixableObj, [Disposable, Activatable]);
 
 let obj = new MixableObj();
+obj.interact();
 setTimeout(() => obj.interact(), 1000);
